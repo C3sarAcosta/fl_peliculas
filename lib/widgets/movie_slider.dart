@@ -14,7 +14,6 @@ class MovieSlider extends StatelessWidget {
       width: double.infinity,
       //Establecemos el alto del contenedor
       height: size.height * 0.3,
-      color: Colors.blue,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,7 +53,6 @@ class _MoviePoster extends StatelessWidget {
     return Container(
       width: size.width * 0.3,
       height: size.height * 0.25,
-      color: Colors.green,
       child: Column(
         children: [
           GestureDetector(

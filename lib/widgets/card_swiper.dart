@@ -9,7 +9,6 @@ class CardSwiper extends StatelessWidget {
     //Obtenemos el tamaño de la pantalla del dispositivo
     final size = MediaQuery.of(context).size;
     return Container(
-      color: Colors.red,
       //Ancho se estira toda la pantalla
       //width: size.width,
       width: double.infinity,
