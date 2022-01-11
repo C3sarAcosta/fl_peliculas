@@ -1,3 +1,5 @@
+import 'package:fl_peliculas/screens/details_screen.dart';
+import 'package:fl_peliculas/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -9,16 +11,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light()
           .copyWith(appBarTheme: const AppBarTheme(color: Colors.purple)),
       title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: const Text('Hello World'),
-          ),
-        ),
-      ),
+      initialRoute: 'home',
+      routes: {
+        'home': (_) => HomeScreen(),
+        'details': (_) => DetailsScreen(),
+      },
     );
   }
 }
