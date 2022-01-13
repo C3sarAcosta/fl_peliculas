@@ -1,3 +1,4 @@
+import 'package:fl_peliculas/models/movie.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -7,14 +8,22 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: Cambiar por una instancia de pelicula
     //Obtener los argumentos
-    final String movie =
-        ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-movie';
+    final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          _CustomAppBar(
+            movie: movie,
+          ),
           SliverList(
-            delegate: SliverChildListDelegate([_PosterAndTitle(), _Overview()]),
+            delegate: SliverChildListDelegate([
+              _PosterAndTitle(
+                movie: movie,
+              ),
+              _Overview(
+                movie: movie,
+              ),
+            ]),
           )
         ],
       ),
@@ -23,7 +32,8 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  const _CustomAppBar({Key? key}) : super(key: key);
+  final Movie movie;
+  const _CustomAppBar({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +47,10 @@ class _CustomAppBar extends StatelessWidget {
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        title: Text('Movie.Title'),
+        title: Text(movie.title),
         background: FadeInImage(
           placeholder: NetworkImage('https://via.placeholder.com/500x300'),
-          image: NetworkImage('https://via.placeholder.com/500x300'),
+          image: NetworkImage(movie.fullBackDropPath),
           fit: BoxFit.cover,
         ),
       ),
@@ -49,7 +59,8 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _PosterAndTitle extends StatelessWidget {
-  const _PosterAndTitle({Key? key}) : super(key: key);
+  final Movie movie;
+  const _PosterAndTitle({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +74,7 @@ class _PosterAndTitle extends StatelessWidget {
         children: [
           FadeInImage(
             placeholder: NetworkImage('https://via.placeholder.com/200x300'),
-            image: NetworkImage('https://via.placeholder.com/200x300'),
+            image: NetworkImage(movie.fullPosterImg),
             height: size.height * 0.2,
           ),
           SizedBox(
@@ -75,13 +86,13 @@ class _PosterAndTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Aliqua qui ad magna cillum id irure',
+                  movie.title,
                   style: themeData.headline5,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
                 Text(
-                  'Aliqua qui ad magna cillum id irure quis enim esse ea tempor laborum duis adipisicing.',
+                  movie.originalTitle,
                   style: themeData.subtitle1,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -94,7 +105,7 @@ class _PosterAndTitle extends StatelessWidget {
                       color: Colors.purple,
                     ),
                     Text(
-                      '3.5',
+                      '${movie.voteAverage}',
                       style: themeData.caption,
                     )
                   ],
@@ -109,14 +120,15 @@ class _PosterAndTitle extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
-  const _Overview({Key? key}) : super(key: key);
+  final Movie movie;
+  const _Overview({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Text(
-        'Ea aliquip dolor et incididunt incididunt ipsum ut fugiat dolor officia consequat dolor. Esse adipisicing dolore enim labore voluptate velit commodo velit duis eiusmod ad duis dolore ex. Enim nostrud officia dolore cillum et adipisicing magna do dolor. Fugiat sit eu nulla voluptate amet excepteur.',
+        movie.overview,
         style: Theme.of(context).textTheme.bodyText1,
         textAlign: TextAlign.justify,
       ),
